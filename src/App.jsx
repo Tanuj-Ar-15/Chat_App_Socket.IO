@@ -22,7 +22,7 @@ function AppContent() {
   }, [checkAuth])
 
 
-  const hideNavbarPaths = ['/login', '/signup'];
+  const hideNavbarPaths = [];
 
   if (isCheckingAuth && !authUser) {
     return (
@@ -35,11 +35,10 @@ function AppContent() {
   return (
     <>
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
-
       <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path='/signup' element={!authUser ? <SignUp /> : <Navigate to="/" />} />
-        <Route path='/login' element={<Login />} />
+        <Route path='/login' element={!authUser ?   <Login /> : <Navigate to={"/"} /> } />
         <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path='/settings' element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
       </Routes>
