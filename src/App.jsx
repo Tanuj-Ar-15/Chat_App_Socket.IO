@@ -7,9 +7,7 @@ import SignUp from './Page/SignUp'
 import Login from './Page/Login'
 import ProfilePage from './Page/ProfilePage'
 import SettingsPage from './Page/SettingsPage'
-
 import { BrowserRouter as Router } from 'react-router-dom'
-import { axiosInstance } from './lib/axios'
 import { useAuthStore } from './store/useAuth'
 import { Toaster } from 'react-hot-toast'
 import { useThemeStore } from './store/useThemeStore'
@@ -17,7 +15,7 @@ import { useThemeStore } from './store/useThemeStore'
 function AppContent() {
   const location = useLocation();
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore()
-  const {theme} = useThemeStore()
+  const { theme } = useThemeStore()
 
   useEffect(() => {
     checkAuth()
@@ -40,7 +38,7 @@ function AppContent() {
       <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path='/signup' element={!authUser ? <SignUp /> : <Navigate to="/" />} />
-        <Route path='/login' element={!authUser ?   <Login /> : <Navigate to={"/"} /> } />
+        <Route path='/login' element={!authUser ? <Login /> : <Navigate to={"/"} />} />
         <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path='/settings' element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
       </Routes>
@@ -50,7 +48,8 @@ function AppContent() {
 
 function App() {
 
-  const {theme} = useThemeStore()
+  const { theme } = useThemeStore()
+
   return (
     <div data-theme={theme}>
       <Router>

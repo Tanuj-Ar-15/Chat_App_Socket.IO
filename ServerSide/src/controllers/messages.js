@@ -18,12 +18,17 @@ const getUserMessages = async (req, res) => {
   try {
     const { id } = req.params;
     const loggedUserId = req.user._id;
+
+    console.log({id , loggedUserId});
+    
     const filteredMessages = await messageModel.find({
       $or: [
         { senderId: id, recieverId: loggedUserId },
         { recieverId: id, senderId: loggedUserId }
       ]
     });
+    console.log("filtered messages" , filteredMessages);
+    
     res.status(200).json(filteredMessages);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -31,10 +36,14 @@ const getUserMessages = async (req, res) => {
 };
 
 const sendMessage = async (req, res) => {
+
+  console.log(req.params);
+
   try {
     const { text, image } = req.body
     const senderId = req.user._id
     const { id: recieverId } = req.params
+    console.log(req.params);
 
     let imageUrl;
     if (image) {
@@ -64,5 +73,5 @@ const sendMessage = async (req, res) => {
 
 
 sideUsers.get("/", protectRoute, sidebarUsers);
-getMessages.get("/", protectRoute, getUserMessages)
-createMessage.post("/", protectRoute, sendMessage)
+getMessages.get("/:id", protectRoute, getUserMessages)
+createMessage.post("/:id", protectRoute, sendMessage)

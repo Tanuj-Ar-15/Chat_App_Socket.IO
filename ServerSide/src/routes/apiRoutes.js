@@ -27,10 +27,10 @@ const sideUsers = Router();
 router.use("/sideusers", sideUsers);
 
 const getMessages = Router();
-router.use("/getmessages/:id", getMessages);
+router.use("/getmessages", getMessages);
 
 const createMessage = Router();
-router.use("/create/message/:id" , createMessage)
+router.use("/create/message" , createMessage)
 
 module.exports = {
   signupRouter,
