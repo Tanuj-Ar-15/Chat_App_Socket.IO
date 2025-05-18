@@ -12,10 +12,12 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { axiosInstance } from './lib/axios'
 import { useAuthStore } from './store/useAuth'
 import { Toaster } from 'react-hot-toast'
+import { useThemeStore } from './store/useThemeStore'
 
 function AppContent() {
   const location = useLocation();
   const { checkAuth, authUser, isCheckingAuth } = useAuthStore()
+  const {theme} = useThemeStore()
 
   useEffect(() => {
     checkAuth()
@@ -33,7 +35,7 @@ function AppContent() {
   }
 
   return (
-    <>
+    <div data-theme={theme} >
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
@@ -42,20 +44,22 @@ function AppContent() {
         <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
         <Route path='/settings' element={authUser ? <SettingsPage /> : <Navigate to="/login" />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
 function App() {
+
+  const {theme} = useThemeStore()
   return (
-    <Router>
-      <AppContent />
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-      />
-    </Router>
+    <div data-theme={theme}>
+      <Router>
+        <AppContent />
+        <Toaster position="top-center" reverseOrder={false} />
+      </Router>
+    </div>
   );
 }
+
 
 export default App;

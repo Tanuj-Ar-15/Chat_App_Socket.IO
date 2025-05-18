@@ -5,6 +5,8 @@ const fileUpload = require("express-fileupload")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 
+// app.use(fileUpload)
+
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
@@ -12,11 +14,6 @@ app.use(cors({
     credentials: true
 }))
 
-app.use(fileUpload({
-    preserveExtension: true,
-    parseNested: true,
-    preservePath: true,
-    tempFileDir: os.tmpdir()
-}))
+app.use(fileUpload())
 
 module.exports = {app}

@@ -6,8 +6,9 @@ const { userModel } = require("../../models/user.model");
 const updateProfile = async (req, res) => {
   const { profilePic } = req.files;
 
+
   try {
-    const id = req.user.userId;
+    const id = req.user._id; // Only the base64 string after the comma
 
     const secureUrl = await uploadProfilePic(profilePic.data);
     const updateProfile = await userModel.findByIdAndUpdate(
@@ -15,6 +16,8 @@ const updateProfile = async (req, res) => {
       { profilePic: secureUrl },
       { new: true }
     );
+
+    
     res.status(200).json(updateProfile);
   } catch (error) {
     console.log(error);
