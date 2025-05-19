@@ -14,7 +14,9 @@ import { useThemeStore } from './store/useThemeStore'
 
 function AppContent() {
   const location = useLocation();
-  const { checkAuth, authUser, isCheckingAuth } = useAuthStore()
+  const { checkAuth, authUser, isCheckingAuth , onlineUsers } = useAuthStore()
+    console.log("onlineUSers", onlineUsers);
+
   const { theme } = useThemeStore()
 
   useEffect(() => {

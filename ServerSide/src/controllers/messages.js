@@ -46,6 +46,7 @@ const sendMessage = async (req, res) => {
     const senderId = req.user._id
     const { id: recieverId } = req.params
     // console.log(req.params);
+console.log("senderId" , senderId);
 
     let imageUrl;
     if (image) {

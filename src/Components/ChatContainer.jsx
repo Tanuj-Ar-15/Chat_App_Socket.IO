@@ -17,13 +17,19 @@ const ChatContainer = () => {
     subscribeTomessages()
 
     return () => unsubscribeTomessages()
-  }, [getMessages, selectedUser?._id , subscribeTomessages , unsubscribeTomessages]);
+  }, [getMessages, selectedUser?._id, subscribeTomessages, unsubscribeTomessages]);
 
 
   useLayoutEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+
+
+  useEffect(() => {
+    console.log("messages", messages);
+
+  }, [messages])
   if (isMessagesLoading) {
     return (
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -35,6 +41,7 @@ const ChatContainer = () => {
       </div>
     );
   }
+
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">

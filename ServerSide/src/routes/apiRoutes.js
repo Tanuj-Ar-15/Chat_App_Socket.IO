@@ -30,7 +30,7 @@ const getMessages = Router();
 router.use("/getmessages", getMessages);
 
 const createMessage = Router();
-router.use("/create/message" , createMessage)
+router.use("/create/message", createMessage)
 
 module.exports = {
   signupRouter,

@@ -15,7 +15,7 @@ const getRecieverSocketId = (userId) => {
     return onlineUserId[userId]
 }
 io.on("connect", (socket) => {
-    console.log("A user connected", socket.id);
+    // console.log("A user connected", socket.id);
 
     const userId = socket.handshake.query.userId
 
@@ -25,11 +25,14 @@ io.on("connect", (socket) => {
         onlineUserId[userId] = socket.id
         io.emit("onlineUser", Object.keys(onlineUserId))
     }
+    console.log("onlineUserId connect", onlineUserId);
 
     socket.on("disconnect", () => {
         delete onlineUserId[userId]
+    console.log("onlineUserId disconnect", onlineUserId);
+
         io.emit("onlineUser", Object.keys(onlineUserId))
-        console.log("A user is disconnected.");
+        // console.log("A user is disconnected.");
 
     })
 

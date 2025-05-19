@@ -6,7 +6,6 @@ import { useChatStore } from "../store/useChatStore";
 const ChatHeader = () => {
     const { selectedUser, setSelectedUser } = useChatStore();
     const { onlineUsers } = useAuthStore();
-    console.log("onlineUSers", onlineUsers);
 
     console.log("selected User", selectedUser);
 

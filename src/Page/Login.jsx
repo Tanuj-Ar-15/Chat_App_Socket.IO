@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthStore } from '../store/useAuth'
 import { Eye, EyeOff, Loader, Mail, MessageSquare, User, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -6,7 +6,7 @@ import AuthImagePattern from '../Components/AuthImagePattern';
 import toast from 'react-hot-toast';
 
 const Login = () => {
-  const { isLoggingIn, login } = useAuthStore();
+  const { isLoggingIn, login, checkAuth } = useAuthStore();
   const initialState = {
     email: "",
     password: ""
@@ -28,6 +28,7 @@ const Login = () => {
     const success = validateForm()
     if (success === true) {
       login(signInData)
+   
     }
 
   }
