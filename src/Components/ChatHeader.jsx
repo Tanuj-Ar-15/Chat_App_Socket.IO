@@ -6,6 +6,9 @@ import { useChatStore } from "../store/useChatStore";
 const ChatHeader = () => {
     const { selectedUser, setSelectedUser } = useChatStore();
     const { onlineUsers } = useAuthStore();
+    console.log("onlineUSers", onlineUsers);
+
+    console.log("selected User", selectedUser);
 
     return (
         <div className="p-2.5 border-b border-base-300 w-full ">
@@ -22,6 +25,10 @@ const ChatHeader = () => {
                     <div>
                         <h3 className="font-medium capitalize ">{selectedUser.fullName}</h3>
                         <p className="text-sm text-base-content/70">
+                            <span
+                                className={`h-2.5 w-2.5 rounded-full ${onlineUsers.includes(selectedUser._id) ? 'bg-green-500' : 'bg-red-400'
+                                    }`}
+                            ></span>
                             {onlineUsers.includes(selectedUser._id) ? "Online" : "Offline"}
                         </p>
                     </div>

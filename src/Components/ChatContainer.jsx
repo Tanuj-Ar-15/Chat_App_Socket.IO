@@ -7,14 +7,17 @@ import { useAuthStore } from '../store/useAuth';
 import { formatMessageTime } from '../lib/utils';
 
 const ChatContainer = () => {
-  const { messages, isMessagesLoading, selectedUser, getMessages, createMessage } = useChatStore();
+  const { messages, isMessagesLoading, selectedUser, getMessages, subscribeTomessages, unsubscribeTomessages } = useChatStore();
   const { authUser } = useAuthStore();
 
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
     getMessages(selectedUser?._id);
-  }, [getMessages, selectedUser?._id ]);
+    subscribeTomessages()
+
+    return () => unsubscribeTomessages()
+  }, [getMessages, selectedUser?._id , subscribeTomessages , unsubscribeTomessages]);
 
 
   useLayoutEffect(() => {
@@ -87,7 +90,7 @@ export default ChatContainer;
 
 
 
-// -- Previous Code -- 
+// -- Previous Code --
 
 
 // import React, { useEffect } from 'react'

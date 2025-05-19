@@ -1,5 +1,5 @@
-const {app  } = require("./app")
-const {server} = require("./lib/socket")
+const { app } = require("./app")
+const { server } = require("./lib/socket")
 //  Environment Variable Configuration.
 const dotenv = require("dotenv")
 dotenv.config()
@@ -11,12 +11,12 @@ require("./config/mongoDb")
 
 // Initializing Controllers Api's
 const requireDir = require("require-dir")
-requireDir("controllers" , {recurse: true})
+requireDir("controllers", { recurse: true })
 
 
 
 //Listening of port
-server.listen(port , ()=> {
+server.listen(port, () => {
     console.log("Server is running on port: " + port)
 })
 

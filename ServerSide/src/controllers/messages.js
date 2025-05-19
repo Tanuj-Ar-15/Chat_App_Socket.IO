@@ -2,6 +2,8 @@ const { sideUsers, getMessages, createMessage } = require("../routes/apiRoutes.j
 const { protectRoute } = require("../middleware/auth.middleware.js");
 const { userModel } = require("../models/user.model.js");
 const { messageModel } = require("../models/message.model.js");
+const { getRecieverSocketId } = require("../lib/socket.js");
+const { io } = require("../lib/socket.js")
 const cloudinary = require("cloudinary").v2;
 
 const sidebarUsers = async (req, res) => {
@@ -19,16 +21,16 @@ const getUserMessages = async (req, res) => {
     const { id } = req.params;
     const loggedUserId = req.user._id;
 
-    console.log({id , loggedUserId});
-    
+    // console.log({id , loggedUserId});
+
     const filteredMessages = await messageModel.find({
       $or: [
         { senderId: id, recieverId: loggedUserId },
         { recieverId: id, senderId: loggedUserId }
       ]
     });
-    console.log("filtered messages" , filteredMessages);
-    
+    // console.log("filtered messages" , filteredMessages);
+
     res.status(200).json(filteredMessages);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -37,13 +39,13 @@ const getUserMessages = async (req, res) => {
 
 const sendMessage = async (req, res) => {
 
-  console.log(req.params);
+  // console.log(req.params);
 
   try {
     const { text, image } = req.body
     const senderId = req.user._id
     const { id: recieverId } = req.params
-    console.log(req.params);
+    // console.log(req.params);
 
     let imageUrl;
     if (image) {
@@ -61,6 +63,10 @@ const sendMessage = async (req, res) => {
 
     await newMessage.save()
     //todo: realtime functionality with socket.io will be here
+    const recieverSocketId = getRecieverSocketId(newMessage.recieverId)
+    io.to(recieverSocketId).emit("newMessage", newMessage)
+
+
     res.json({
       newMessage
     })
